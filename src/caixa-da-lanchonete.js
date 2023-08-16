@@ -1,3 +1,11 @@
+/*
+Gustavo W M Silva
+
+Não sou acostumado a programar e JavaScript, por isso primeiro eu desenvolvi a lógica em java
+para depois através de tutoriais e exemplos na internet, eu converti a lógica de Java para JavaScript
+
+*/
+
 class CaixaDaLanchonete {
     constructor() {
         this.cardapio = {
@@ -22,16 +30,20 @@ class CaixaDaLanchonete {
 
     calcularValorDaCompra(metodoDePagamento, itens) {
         let total = 0;
-        let i = 0;
         const itemQuantities = [];
         let itemPrincipal = 0;
-        const [cod, par] = [];
-
-        let size = itens.length
-        if (size < 1) {
-            return "Não há itens no carrinho de compra!";
+        
+        //Verificamos logo de incio para averiguar execucoes desnecessarias
+        if (!['debito', 'credito', 'dinheiro'].includes(metodoDePagamento)) {
+            return "Forma de pagamento inválida!";
         }
 
+        if (itens.length < 1) {
+            return "Não há itens no carrinho de compra!";
+        }
+        // 
+
+        // Verifica os itens e calcula os valores
         for (const item of itens) {
             const [codigo, quantidade] = item.split(',');
             if (quantidade < 1) {
@@ -45,6 +57,7 @@ class CaixaDaLanchonete {
 
             total += valorItem * parseInt(quantidade);
 
+            // se houver algum item extra adiciona na lista quantidades para verificar setem o item principal correspondente
             if (this.extras[codigo]) {
                 itemQuantities.push(codigo);
             }
@@ -71,8 +84,6 @@ class CaixaDaLanchonete {
             total -= total * this.descontoDinheiro;
         } else if (metodoDePagamento === 'credito') {
             total += total * this.acrescimoCredito;
-        } else if (metodoDePagamento !== 'debito') {
-            return "Forma de pagamento inválida!";
         }
 
         return `R$ ${total.toFixed(2).replace('.', ',')}`;

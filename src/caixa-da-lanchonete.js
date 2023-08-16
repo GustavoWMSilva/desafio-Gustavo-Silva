@@ -22,8 +22,13 @@ class CaixaDaLanchonete {
 
     calcularValorDaCompra(metodoDePagamento, itens) {
         let total = 0;
+        let i = 0;
+        const itemQuantities = [];
+        let itemPrincipal = 0;
+        const [cod, par] = [];
+
         let size = itens.length
-        if (size === 0) {
+        if (size < 1) {
             return "Não há itens no carrinho de compra!";
         }
 
@@ -40,10 +45,27 @@ class CaixaDaLanchonete {
 
             total += valorItem * parseInt(quantidade);
 
-            if (this.extras[codigo] && !itens.includes(`${this.extras[codigo]},1`)) {
+            if (this.extras[codigo]) {
+                itemQuantities.push(codigo);
+            }
+
+        }
+
+
+        if (itemQuantities.length > 0) {
+            for (const cod of itemQuantities) {
+                for (const item2 of itens) {
+                    const [codigo2, quantidade2] = item2.split(',');
+                    if (codigo2 === this.extras[cod]) {
+                        itemPrincipal++;
+                    }
+                }
+            }
+            if (itemPrincipal < 1) {
                 return "Item extra não pode ser pedido sem o principal";
             }
         }
+
 
         if (metodoDePagamento === 'dinheiro') {
             total -= total * this.descontoDinheiro;

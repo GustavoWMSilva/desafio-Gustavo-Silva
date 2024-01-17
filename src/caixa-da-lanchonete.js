@@ -1,9 +1,5 @@
 /*
 Gustavo W M Silva
-
-Não sou acostumado a programar e JavaScript, por isso primeiro eu desenvolvi a lógica em java
-para depois através de tutoriais e exemplos na internet, eu converti a lógica de Java para JavaScript
-
 */
 
 class CaixaDaLanchonete {
